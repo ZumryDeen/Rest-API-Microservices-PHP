@@ -15,8 +15,24 @@ class Genaratequery extends Controller
         if(!($city = City::where('name', $city)->first()))
             throw new NotFoundHttpException('Unknown city!');
 
+        dd($city->weatherStat()->first());
+
        echo      $this->response->item($city->weatherStat()->first(),new WeatherStatTransformer()) ;
        // return $this->response->item($city->weatherStats()->first(), new WeatherStatTransformer());
 
+
+
+
     }
+
+    public function all($city){
+
+        if(!($city= City::where('name',$city)->first));
+        throw new NotFoundHttpException('Unkown City');
+
+        return $this->response->collection($city->weatherStat()->first(),New WeatherStatTransformer());
+
+    }
+
+
 }

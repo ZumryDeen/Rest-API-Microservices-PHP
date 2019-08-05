@@ -16,8 +16,10 @@ class ApixService
 
    $result = collect();
 
+
+
    $ObjquzzleClient = New Client([
-       'base_url'=>'https://api.apixu.com/',
+       'base_uri'=>'https://api.apixu.com/',
    ]);
 
    foreach ($cities as $city){
@@ -31,8 +33,16 @@ class ApixService
 
        $response = json_decode($response->getBody()->getContents(),true);
 
+
+
        $stat = new WeatherStats();
-       $stat->city()->associate($city);
+
+
+       //$stat->city()
+$stat->CityRelation()->associate($city);
+
+
+      // $stat->city_relation_id =
        $stat->temp_celsius = $response['current']['temp_c'];
        $stat->status = $response['current']['condition']['text'];
        $stat->last_update = Carbon::createFromTimestamp($response['current']['last_updated_epoch']);
