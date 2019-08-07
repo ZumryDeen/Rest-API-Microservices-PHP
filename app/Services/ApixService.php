@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\City;
 use App\Models\WeatherStats;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -16,11 +17,13 @@ class ApixService
 
    $result = collect();
 
-
+;
 
    $ObjquzzleClient = New Client([
        'base_uri'=>'https://api.apixu.com/',
    ]);
+
+
 
    foreach ($cities as $city){
 
@@ -39,15 +42,22 @@ class ApixService
 
 
        //$stat->city()
-$stat->CityRelation()->associate($city);
+$stat->city()->associate($city);
+// in here this city method will gerate city_id automatically
+
 
 
       // $stat->city_relation_id =
        $stat->temp_celsius = $response['current']['temp_c'];
+
        $stat->status = $response['current']['condition']['text'];
        $stat->last_update = Carbon::createFromTimestamp($response['current']['last_updated_epoch']);
        $stat->provider = 'apixu.com';
+
+
        $stat->save();
+
+
 
        $result->push($stat);
 

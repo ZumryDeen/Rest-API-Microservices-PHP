@@ -13,7 +13,7 @@ class WeatherStats extends Model
         'updated_at',
     ];
 
-    public function CityRelation(){
+    public function city(){
 
         return $this->belongsTo(City::class);
 

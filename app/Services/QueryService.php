@@ -27,7 +27,8 @@ class QueryService
 
         $cities = City::all();
 
-        $this->apixService->query(env('APIXU_APIKEY'),$cities);
+
+    $result  =   $this->apixService->query(env('APIXU_APIKEY'),$cities);
 
        // $this->ApixService->query(env('APIXU_APIKEY',$cities));
 
