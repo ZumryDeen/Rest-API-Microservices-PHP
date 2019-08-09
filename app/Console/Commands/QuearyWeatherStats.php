@@ -19,7 +19,7 @@ class QuearyWeatherStats extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Get All Stat';
 
     /**
      * Create a new command instance.

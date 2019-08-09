@@ -20,7 +20,8 @@ $router->version('v1',function (Router $router){
 
 
         $router->group(['prefix' => 'weather'], function (Router $router) {
-            $router->get('test','Servercontroller@test');
+
+            $router->get('test','Genaratequery@test');
             $router->get('city/{city}/current', 'Genaratequery@current');
             //$router->get('city/{city}/all', 'Genaratequeryr@all');
 

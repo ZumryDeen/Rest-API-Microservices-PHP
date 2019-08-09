@@ -7,8 +7,7 @@ use App\Models\WeatherStats;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Collection;
-
-
+use Illuminate\Support\Facades\DB;
 
 
 class ApixService
@@ -17,16 +16,14 @@ class ApixService
 
    $result = collect();
 
-;
 
    $ObjquzzleClient = New Client([
        'base_uri'=>'https://api.apixu.com/',
    ]);
 
 
-
    foreach ($cities as $city){
-
+       DB::connection()->enableQueryLog();
        $response = $ObjquzzleClient->get('v1/current.json',[
        'query'=>[
            'key'=>$apiKey,
@@ -35,15 +32,11 @@ class ApixService
        ]);
 
        $response = json_decode($response->getBody()->getContents(),true);
-
-
-
        $stat = new WeatherStats();
 
-
        //$stat->city()
-$stat->city()->associate($city);
-// in here this city method will gerate city_id automatically
+        $stat->city()->associate($city);
+        // in here this city method will gerate city_id automatically``
 
 
 
@@ -55,19 +48,20 @@ $stat->city()->associate($city);
        $stat->provider = 'apixu.com';
 
 
+
        $stat->save();
 
 
 
        $result->push($stat);
 
-       return $result;
-
-
-
 
    }
 
+        DB::enableQueryLog(); // Enable query log
+        // Your Eloquent query
+        dd(DB::getQueryLog()); // Show results of log
+        return $result;
     }
 
 
